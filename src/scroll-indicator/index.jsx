@@ -1,25 +1,24 @@
-import { useState, useEffect } from "react";
-import "./scroll.css"
+import { useEffect, useState } from "react";
+import "./scroll.css";
 
 export default function ScrollIndicator({ url }) {
   const [data, setData] = useState([]);
-  const [loading, setloading] = useState(false);
-  const [errorMessage, setErrormessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [scrollPercentage, setScrollPercentage] = useState(0);
 
   async function fetchData(getUrl) {
     try {
-      setloading(true);
+      setLoading(true);
       const response = await fetch(getUrl);
       const data = await response.json();
-
       if (data && data.products && data.products.length > 0) {
         setData(data.products);
-        setloading(false);
+        setLoading(false);
       }
     } catch (e) {
       console.log(e);
-      setErrormessage(e.message);
+      setErrorMessage(e.message);
     }
   }
 
@@ -35,13 +34,14 @@ export default function ScrollIndicator({ url }) {
       document.documentElement.clientHeight
     );
 
-    const scrolled =
+    const howMuchScrolled =
       document.body.scrollTop || document.documentElement.scrollTop;
-    const heigth =
+
+    const height =
       document.documentElement.scrollHeight -
       document.documentElement.clientHeight;
 
-    setScrollPercentage((scrolled / heigth) * 100);
+    setScrollPercentage((howMuchScrolled / height) * 100);
   }
 
   useEffect(() => {
@@ -55,18 +55,17 @@ export default function ScrollIndicator({ url }) {
   console.log(data, scrollPercentage);
 
   if (errorMessage) {
-    return <div>Error ! {errorMessage}</div>
+    return <div>Error ! {errorMessage}</div>;
   }
 
   if (loading) {
-    return<div>Loading data ! Please wait</div>
+    return <div>Loading data ! Pleaae wait</div>;
   }
-
 
   return (
     <div>
       <div className="top-container">
-        <h1> Custom Scroll Indicator</h1>
+        <h1>Custom Scroll Indicator</h1>
         <div className="scroll-progress-container">
           <div
             className="current-progress-bar"
@@ -74,7 +73,6 @@ export default function ScrollIndicator({ url }) {
           ></div>
         </div>
       </div>
-
       <div className="data-container">
         {data && data.length > 0
           ? data.map((dataItem) => <p>{dataItem.title}</p>)
