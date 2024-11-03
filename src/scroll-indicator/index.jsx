@@ -27,5 +27,14 @@ export default function ScrollIndicator({ url }) {
 
   console.log(data, loading);
 
-  return <div></div>;
+  return (
+    <div>
+      <h1> Custom Scroll Indicator</h1>
+      <div className="data-container">
+        {data && data.length > 0
+          ? data.map((dataItem) => <p>{DataTransferItem.title}</p>)
+          : null}
+      </div>
+    </div>
+  );
 }
